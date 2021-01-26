@@ -4,29 +4,31 @@ import com.itheima.dao.IAccountDao;
 import com.itheima.domain.Account;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.support.JdbcDaoSupport;
 
-import java.io.Serializable;
 import java.util.List;
 
 /**
  *账户的持久层实现类
  */
-public class AccountDaoImpl implements IAccountDao {
-    private JdbcTemplate jt;
+public class AccountDaoImpl extends JdbcDaoSupport implements IAccountDao {
 
-    public void setJt(JdbcTemplate jt) {
-        this.jt = jt;
-    }
+    /* private JdbcTemplate jdbcTemplate;
+
+    @Override
+    public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }*/
 
     @Override
     public Account findById(Integer accountId) {
-      List<Account> accounts = jt.query("select * from account where id = ?",new BeanPropertyRowMapper<Account>(Account.class),accountId);
+      List<Account> accounts = super.getJdbcTemplate().query("select * from account where id = ?",new BeanPropertyRowMapper<Account>(Account.class),accountId);
       return  accounts.isEmpty()?null:accounts.get(0);
     }
 
     @Override
     public Account findByName(String accountName) {
-        List<Account> accounts = jt.query("select * from account where name = ?",new BeanPropertyRowMapper<Account>(Account.class),accountName);
+        List<Account> accounts = super.getJdbcTemplate().query("select * from account where name = ?",new BeanPropertyRowMapper<Account>(Account.class),accountName);
         if(accounts.isEmpty()){
             return null;
         }
@@ -38,6 +40,6 @@ public class AccountDaoImpl implements IAccountDao {
 
     @Override
     public void updateAcount(Account account) {
-        jt.update("update account set name = ?,money = ? where id = ?",account.getName(),account.getMoney(),account.getId());
+        super.getJdbcTemplate().update("update account set name = ?,money = ? where id = ?",account.getName(),account.getMoney(),account.getId());
     }
 }

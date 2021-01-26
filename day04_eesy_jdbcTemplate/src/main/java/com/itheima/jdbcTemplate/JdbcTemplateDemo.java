@@ -8,8 +8,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 public class JdbcTemplateDemo {
     public static void main(String[] args) {
         ApplicationContext ac = new ClassPathXmlApplicationContext("bean.xml");
-        JdbcTemplate jt = ac.getBean(JdbcTemplate.class);
+        JdbcTemplate jdbcTemplate = ac.getBean(JdbcTemplate.class);
         //2.执行操作
-        jt.execute("insert into account(name,money)values('ccc',1000)");
+        jdbcTemplate.execute("insert into account(name,money)values('ccc',1000)");
     }
 }
