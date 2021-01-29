@@ -25,7 +25,7 @@ public class TestAlgorithm {
         for(int i = 0;i<array.length;i++){
             int partnerNumber = target - array[i];
             if(hashMap.containsKey(partnerNumber)){
-
+                return new int[]{hashMap.get(partnerNumber),i};
             }
             hashMap.put(array[i],i);
         }
@@ -34,8 +34,8 @@ public class TestAlgorithm {
 
     public static void main(String[] args) {
         int[] array = {1,3,5,7,33,11};
-        int target = 12;
-        int[] retValue = twoNumSum1(array,target);
+        int target = 40;
+        int[] retValue = twoNumSum2(array,target);
         for(int element:retValue){
             System.out.println(element);
         }
